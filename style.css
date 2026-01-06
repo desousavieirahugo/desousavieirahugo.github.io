@@ -144,15 +144,26 @@ section {
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
 .item { display: block; position: relative; background: #eee; aspect-ratio: 4/3; overflow: hidden; } /* aspect-ratio force un format 4/3 */
+
 .item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(100%); }
 /* Effets au survol d'un projet */
 .item:hover img { transform: scale(1.05); filter: grayscale(0%); }
+
 .item-info {
     position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px;
-    background: rgba(255,255,255,0.95); transform: translateY(100%); transition: 0.3s;
+    background: rgba(255,255,255,0.95); transform: translateY(100%); transition: 0.3s; z-index: 3;
 }
 /* Au survol, le bloc d'info monte pour devenir visible */
 .item:hover .item-info { transform: translateY(0); }
+
+/* "Lire la suite" qui apparaît dans le bloc d'info (au survol sur ordinateur, toujours visible sur mobile) */
+.item-info::after {
+    content: 'Lire la suite →';
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--accent);
+}
 
 /* --- Styles pour les pages de projet individuelles --- */
 .project-page-section {
@@ -219,4 +230,18 @@ footer {
     
     #home { height: auto; padding: 60px 20px;}
     section { padding: 60px 5%; }
+
+    /* --- Styles pour le portfolio sur mobile --- */
+    .item .item-info {
+        transform: translateY(0); /* Affiche le bloc d'info en permanence */
+    }
+
+    .item img {
+        filter: grayscale(0%); /* Affiche les images en couleur par défaut */
+    }
+
+    /* On désactive l'effet de zoom au survol sur les appareils tactiles */
+    .item:hover img {
+        transform: none;
+    }
 }
