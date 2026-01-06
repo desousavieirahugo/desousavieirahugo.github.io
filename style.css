@@ -1,0 +1,222 @@
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION DE BASE
+   ========================================================================== */
+
+/* Déclaration des variables de couleur pour une maintenance facile */
+:root {
+    --primary: #121212; /* Couleur principale (noir) pour les titres, bordures... */
+    --secondary: #e5e5e5; /* Couleur secondaire (gris clair) */
+    --accent: #ff4d4d; /* Couleur d'accentuation (rouge) pour attirer l'œil */
+    --bg: #ffffff; /* Couleur de fond principale (blanc) */
+    --text: #444; /* Couleur du texte par défaut (gris foncé) */
+}
+
+/* Réinitialisation des styles par défaut du navigateur (reset) */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Active le défilement fluide sur toute la page quand on clique sur un lien ancre (#) */
+html { scroll-behavior: smooth; }
+
+/* Styles de base pour le corps de la page */
+body {
+    font-family: 'Roboto Mono', monospace; /* Police pour le texte courant */
+    line-height: 1.6; /* Hauteur de ligne pour une meilleure lisibilité */
+    color: var(--text); /* Couleur du texte par défaut */
+    background: var(--bg); /* Couleur de fond par défaut */
+    font-size: 15px; /* Taille de police de base */
+}
+
+/* Styles pour les titres */
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif; /* Police pour les titres */
+    text-transform: uppercase; /* Met le texte en majuscules */
+    color: var(--primary); /* Couleur des titres */
+    letter-spacing: 1px; /* Espacement entre les lettres */
+}
+
+/* Style de base pour les liens */
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+/* ==========================================================================
+   2. EN-TÊTE (HEADER)
+   ========================================================================== */
+header {
+    position: fixed; /* Fixe le header par rapport à la fenêtre du navigateur */
+    top: 0; width: 100%; /* Le positionne en haut et sur toute la largeur */
+    padding: 20px 50px;
+    background: rgba(255,255,255,0.98);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid #eee;
+    transition: top 0.4s ease-in-out; /* Animation fluide pour l'apparition/disparition */
+}
+
+/* Classe ajoutée par JavaScript pour cacher le header */
+.header-hidden {
+    top: -150px; /* Déplace le header hors de l'écran (vers le haut) */
+}
+
+.logo { font-weight: 700; font-size: 1.2rem; border: 2px solid var(--primary); padding: 5px 10px; }
+
+/* Styles pour la barre de navigation */
+nav ul { display: flex; list-style: none; gap: 30px; }
+nav a { font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+/* Effet au survol des liens de navigation */
+nav a:hover { color: var(--accent); }
+
+/* ==========================================================================
+   3. SECTION D'ACCUEIL (HERO)
+   ========================================================================== */
+#home {
+    height: 95vh; /* Prend 95% de la hauteur de la fenêtre */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(#fafafa, #e5e5e5);
+    padding-top: 60px;
+}
+
+.hero-title { font-size: 4rem; margin-bottom: 10px; font-weight: 800; }
+.hero-subtitle { font-size: 1.2rem; color: #666; margin-bottom: 40px; font-weight: 300; }
+
+.btn-hero {
+    padding: 15px 30px;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.btn-hero:hover { background: var(--primary); color: white; }
+
+/* ==========================================================================
+   4. STYLES GÉNÉRIQUES DES SECTIONS
+   ========================================================================== */
+section { 
+    padding: 80px 10%; 
+    /* Marge interne pour que le titre ne soit pas caché par le header fixe lors du scroll */
+    scroll-margin-top: 80px; 
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 50px;
+    display: inline-block;
+    border-bottom: 3px solid var(--accent);
+}
+
+/* ==========================================================================
+   5. SECTIONS SPÉCIFIQUES
+   ========================================================================== */
+
+/* --- Section Profil --- */
+#profil { display: flex; align-items: center; gap: 50px; }
+.about-content { flex: 1; }
+.about-photo {
+    flex: 1; height: 400px;
+    /* Image de fond pour la section profil */
+    background: #ccc url('https://images.unsplash.com/photo-1517581177697-a06a39d8923a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center/cover;
+}
+
+/* --- Section CV --- */
+#cv { background: var(--primary); color: white; text-align: center; padding: 60px 20px; }
+#cv h2 { color: white; border-color: white; }
+
+.cv-grid { display: flex; justify-content: center; gap: 50px; margin-bottom: 40px; flex-wrap: wrap; text-align: left; }
+.cv-column h3 { color: var(--accent); font-size: 1rem; margin-bottom: 15px; }
+.cv-column ul { list-style: none; }
+.cv-column li { margin-bottom: 8px; }
+
+.btn-download {
+    display: inline-block; padding: 15px 40px;
+    background: var(--accent); color: white;
+    font-weight: bold; text-transform: uppercase; border-radius: 50px;
+}
+.btn-download:hover { background: white; color: var(--primary); }
+
+/* --- Section Portfolio (Galerie de projets) --- */
+/* "grid" crée une grille. "repeat(auto-fit, minmax(300px, 1fr))" est une formule magique pour le responsive :
+   - Crée autant de colonnes que possible qui font au minimum 300px.
+   - "1fr" signifie que les colonnes se partagent l'espace restant de manière égale. */
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+.item { display: block; position: relative; background: #eee; aspect-ratio: 4/3; overflow: hidden; } /* aspect-ratio force un format 4/3 */
+.item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(100%); }
+/* Effets au survol d'un projet */
+.item:hover img { transform: scale(1.05); filter: grayscale(0%); }
+.item-info {
+    position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px;
+    background: rgba(255,255,255,0.95); transform: translateY(100%); transition: 0.3s;
+}
+/* Au survol, le bloc d'info monte pour devenir visible */
+.item:hover .item-info { transform: translateY(0); }
+
+/* --- Styles pour les pages de projet individuelles --- */
+.project-page-section {
+    padding-top: 120px; /* Espace pour le header fixe */
+    padding-bottom: 80px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.project-page-section h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+.project-page-section .project-subtitle {
+    font-size: 1.1rem;
+    color: #777;
+    margin-bottom: 40px;
+}
+.project-page-section .project-text {
+    margin-bottom: 40px;
+    line-height: 1.8;
+}
+.project-page-section .project-gallery {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+.project-page-section .project-gallery img {
+    width: 100%;
+    height: auto;
+}
+.btn-back {
+    display: inline-block; padding: 12px 25px;
+    border: 2px solid var(--primary); color: var(--primary); font-weight: bold;
+}
+.btn-back:hover { background: var(--primary); color: white; }
+
+/* --- CONTACT --- */
+#contact { background: #f4f4f4; text-align: center; }
+.contact-links { display: flex; justify-content: center; gap: 40px; font-size: 1.2rem; margin-top: 30px; flex-wrap: wrap; }
+.contact-item { display: flex; flex-direction: column; align-items: center; }
+.contact-item span { font-size: 0.8rem; color: #888; margin-top: 5px; }
+
+/* --- FOOTER --- */
+footer {
+    text-align: center; padding: 40px 20px;
+    background: #ddd; display: flex; flex-direction: column; align-items: center; gap: 20px;
+}
+.btn-top {
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+    border-bottom: 1px solid #444; padding-bottom: 5px;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN (pour les écrans de moins de 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* On ajuste les tailles et dispositions pour les petits écrans */
+    .hero-title { font-size: 2.5rem; }
+    #profil { flex-direction: column; }
+    .about-photo { width: 100%; height: 300px; }
+
+    /* Le header n'est plus fixé sur mobile pour économiser de l'espace vertical */
+    header { padding: 15px; flex-direction: column; gap: 10px; height: auto; position: relative;}
+    
+    #home { height: auto; padding: 60px 20px;}
+    section { padding: 60px 5%; }
+}

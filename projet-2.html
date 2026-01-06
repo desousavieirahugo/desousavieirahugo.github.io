@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Métadonnées essentielles pour le navigateur -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titre de l'onglet, spécifique à ce projet -->
+    <title>Projet Étude Structurelle | Hugo Vieira</title>
+
+    <!-- Liens vers les polices et la feuille de style (identiques à l'index) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- L'en-tête est le même que sur la page d'accueil -->
+    <header> 
+        <div class="logo">HUGO VIEIRA.</div>
+        <nav>
+            <ul>
+                <!-- Ces liens retournent vers les sections spécifiques de la page d'accueil -->
+                <li><a href="index.html#profil">Profil</a></li>
+                <li><a href="index.html#cv">Mon CV</a></li>
+                <li><a href="index.html#portfolio">Projets</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenu principal de la page projet -->
+    <main>
+        <section class="project-page-section">
+            <h1>Étude Structurelle</h1>
+            <p class="project-subtitle">Maquette Bois & Plâtre</p>
+
+            <!-- Galerie d'images pour ce projet -->
+            <div class="project-gallery">
+                <!-- Remplacez ces images par les vôtres -->
+                <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Vue principale du projet">
+                <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Détail de la maquette">
+            </div>
+
+            <!-- Texte descriptif du projet -->
+            <div class="project-text">
+                <h2>Description du Projet</h2>
+                <p>Ce projet explore les principes structurels à travers la réalisation d'une maquette détaillée. L'objectif était de comprendre et de matérialiser les forces et les contraintes d'un système porteur simple.</p>
+                <br>
+                <p>La maquette a été réalisée en utilisant du bois pour l'ossature principale et du plâtre pour les remplissages, permettant de visualiser clairement la distinction entre les éléments porteurs et les éléments portés.</p>
+            </div>
+
+            <!-- Bouton pour revenir à la section portfolio de la page d'accueil -->
+            <a href="index.html#portfolio" class="btn-back">← Retour aux projets</a>
+
+        </section>
+    </main>
+
+    <!-- Le pied de page est le même que sur la page d'accueil -->
+    <footer> 
+        <p>&copy; 2024 - Étudiant Architecture ENSA Lyon</p>
+        <!-- Le href="#" avec le script ci-dessous permet de remonter en haut de la page actuelle -->
+        <a href="#" class="btn-top">↑ Remonter en haut</a>
+    </footer>
+
+    <!-- Scripts JavaScript (identiques à ceux de l'index pour la cohérence) -->
+    <script>
+        // --- Script 1 : Masquer/afficher le header au défilement ---
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+        let isNavigating = false; // Flag pour ne pas cacher le menu lors d'un clic
+
+        window.addEventListener('scroll', () => {
+            // Si le scroll est déclenché par un clic sur un lien, on ne fait rien.
+            if (isNavigating) {
+                return;
+            }
+            if (lastScrollY < window.scrollY && window.scrollY > 150) {
+                header.classList.add('header-hidden');
+            } else if (lastScrollY > window.scrollY) {
+                header.classList.remove('header-hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // Quand on clique sur le bouton "remonter en haut", on active un flag temporaire
+        document.querySelector('.btn-top').addEventListener('click', () => {
+            isNavigating = true;
+            // On désactive le flag après 1 seconde, le temps que le scroll se termine.
+            setTimeout(() => {
+                isNavigating = false;
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>

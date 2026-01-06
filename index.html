@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Métadonnées essentielles pour le navigateur -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titre de l'onglet dans le navigateur -->
+    <title>Ton Prénom Nom | Étudiant Architecture ENSA Lyon</title>
+
+    <!-- Liens vers les polices de caractères Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Lien vers la feuille de style CSS qui gère l'apparence du site -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header> <!-- En-tête du site, visible sur toutes les pages -->
+        <div class="logo">HUGO VIEIRA.</div>
+        <nav>
+            <ul>
+                <li><a href="#profil">Profil</a></li>
+                <li><a href="#cv">Mon CV</a></li>
+                <li><a href="#portfolio">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Section d'accueil (Hero banner) -->
+    <section id="home">
+        <h1 class="hero-title">Hugo Vieira</h1>
+        <p class="hero-subtitle">Étudiant en Architecture (L2) — ENSA Lyon</p>
+        
+        <!-- Bouton qui mène à la section portfolio -->
+        <a href="#portfolio" class="btn-hero">Voir mes projets</a>
+    </section>
+
+    <!-- Section Profil (anciennement "À propos") -->
+    <section id="profil">
+        <div class="about-content">
+            <h2 class="section-title">Profil</h2>
+            <p>Actuellement en <strong>Licence 2 à l'École Nationale Supérieure d'Architecture de Lyon</strong>, je développe une approche sensible de l'espace et de la matérialité.</p>
+            <br>
+            <p>Passionné par la conception architecturale, le croquis et la maquette, je cherche à approfondir mes compétences à travers des stages et des projets concrets.</p>
+        </div>
+        <!-- Cette div est utilisée pour afficher une photo de profil via le CSS -->
+        <div class="about-photo"></div>
+    </section>
+
+    <!-- Section pour le Curriculum Vitae -->
+    <section id="cv">
+        <h2 class="section-title">Curriculum Vitae</h2>
+        <div class="cv-grid">
+            <div class="cv-column">
+                <h3>Formation</h3>
+                <ul>
+                    <li>2025-26 : L2 Architecture ENSA Lyon</li>
+                    <li>2024-25 : L1 Architecture ENSA Lyon</li>
+                    <li>2022 : Baccalauréat Mention Bien</li>
+                </ul>
+            </div>
+            <div class="cv-column">
+                <h3>Compétences</h3>
+                <ul>
+                    <li>AutoCAD, SketchUp, Rhino 3D</li>
+                    <li>Suite Adobe (Ps, Id, Ai)</li>
+                    <li>Maquette (Bois, Carton, Plâtre)</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Bouton pour télécharger le CV. L'attribut "download" force le téléchargement. -->
+        <a href="mon-cv.pdf" class="btn-download" download>Télécharger mon CV (PDF)</a>
+    </section>
+
+    <!-- Section Portfolio qui présente les projets -->
+    <section id="portfolio">
+        <h2 class="section-title">Travaux & Projets</h2>
+        <div class="gallery">
+            <a href="projet-1.html" class="item">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Projet S3">
+                <div class="item-info">
+                    <h3>Logement Collectif</h3>
+                    <p>Projet Semestre 3 - ENSA Lyon</p>
+                </div>
+            </a>
+            <a href="projet-2.html" class="item">
+                <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Maquette">
+                <div class="item-info">
+                    <h3>Étude Structurelle</h3>
+                    <p>Maquette Bois & Plâtre</p>
+                </div>
+            </a>
+            <a href="projet-3.html" class="item">
+                <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Maison">
+                <div class="item-info">
+                    <h3>Maison Individuelle</h3>
+                    <p>Projet Personnel</p>
+                </div>
+            </a>
+            <a href="projet-4.html" class="item">
+                <img src="https://images.unsplash.com/photo-1581092446347-a84c67a7a5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Croquis">
+                <div class="item-info">
+                    <h3>Carnet de Croquis</h3>
+                    <p>Recherches et esquisses</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section de contact -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <p>N'hésitez pas à me contacter pour toute opportunité.</p>
+        
+        <div class="contact-links">
+            <div class="contact-item">
+                <a href="mailto:ton.email@lyon.archi.fr"><strong>ton.email@lyon.archi.fr</strong></a>
+                <span>Email</span>
+            </div>
+            <div class="contact-item">
+                <strong>06 00 00 00 00</strong>
+                <span>Téléphone</span>
+            </div>
+             <div class="contact-item">
+                <strong>Lyon, France</strong>
+                <span>Localisation</span>
+            </div>
+        </div>
+    </section>
+
+    <footer> <!-- Pied de page du site -->
+        <p>&copy; 2024 - Étudiant Architecture ENSA Lyon</p>
+        <!-- Lien pour remonter en haut de la page -->
+        <a href="#home" class="btn-top">↑ Remonter en haut</a>
+    </footer>
+
+    <!-- Scripts JavaScript pour l'interactivité -->
+    <script>
+        // --- Script 1 : Masquer/afficher le header au défilement ---
+        // On garde en mémoire la dernière position de scroll
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+        let isNavigating = false; // Flag pour ne pas cacher le menu lors d'un clic
+
+        // On écoute l'événement de défilement sur la fenêtre
+        window.addEventListener('scroll', () => {
+            // Si le scroll est déclenché par un clic sur un lien, on ne fait rien.
+            if (isNavigating) {
+                return;
+            }
+            // Si on défile vers le bas (la nouvelle position est plus grande que l'ancienne)
+            // ET qu'on a dépassé une certaine hauteur (150px) pour ne pas le cacher tout de suite
+            if (lastScrollY < window.scrollY && window.scrollY > 150) {
+                header.classList.add('header-hidden'); // On ajoute la classe qui cache le header
+            }
+            // Sinon, si on défile vers le haut
+            else if (lastScrollY > window.scrollY) {
+                header.classList.remove('header-hidden'); // On retire la classe pour le faire réapparaître
+            }
+            // On met à jour la dernière position pour la prochaine comparaison
+            lastScrollY = window.scrollY;
+        });
+
+        // Quand on clique sur un lien qui déclenche un scroll, on active un flag temporaire
+        document.querySelectorAll('header nav a, .btn-top, .btn-hero').forEach(link => {
+            link.addEventListener('click', () => {
+                isNavigating = true;
+                // On désactive le flag après 1 seconde, le temps que le scroll se termine.
+                setTimeout(() => {
+                    isNavigating = false;
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

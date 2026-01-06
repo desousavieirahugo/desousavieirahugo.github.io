@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Métadonnées essentielles pour le navigateur -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titre de l'onglet, spécifique à ce projet -->
+    <title>Projet Logement Collectif | Hugo Vieira</title>
+
+    <!-- Liens vers les polices et la feuille de style (identiques à l'index) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- L'en-tête est le même que sur la page d'accueil -->
+    <header> 
+        <div class="logo">HUGO VIEIRA.</div>
+        <nav>
+            <ul>
+                <!-- Ces liens retournent vers les sections spécifiques de la page d'accueil -->
+                <li><a href="index.html#profil">Profil</a></li>
+                <li><a href="index.html#cv">Mon CV</a></li>
+                <li><a href="index.html#portfolio">Projets</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenu principal de la page projet -->
+    <main>
+        <section class="project-page-section">
+            <h1>Logement Collectif</h1>
+            <p class="project-subtitle">Projet du Semestre 3 - ENSA Lyon</p>
+
+            <!-- Galerie d'images pour ce projet -->
+            <div class="project-gallery">
+                <!-- Remplacez ces images par les vôtres -->
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Vue principale du projet">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Détail de la façade">
+            </div>
+
+            <!-- Texte descriptif du projet -->
+            <div class="project-text">
+                <h2>Description du Projet</h2>
+                <p>Ce projet, réalisé dans le cadre du troisième semestre à l'ENSA Lyon, portait sur la conception d'un immeuble de logements collectifs dans un contexte urbain dense. L'objectif principal était de maximiser la lumière naturelle tout en préservant l'intimité des habitants.</p>
+                <br>
+                <p>L'approche s'est concentrée sur la création de coursives extérieures et de balcons filants, qui servent à la fois de circulation et d'espaces de vie partagés. Le choix des matériaux, comme le bois et le béton brut, vise à créer un dialogue entre la structure et son environnement.</p>
+            </div>
+
+            <!-- Bouton pour revenir à la section portfolio de la page d'accueil -->
+            <a href="index.html#portfolio" class="btn-back">← Retour aux projets</a>
+
+        </section>
+    </main>
+
+    <!-- Le pied de page est le même que sur la page d'accueil -->
+    <footer> 
+        <p>&copy; 2024 - Étudiant Architecture ENSA Lyon</p>
+        <!-- Le href="#" avec le script ci-dessous permet de remonter en haut de la page actuelle -->
+        <a href="#" class="btn-top">↑ Remonter en haut</a>
+    </footer>
+
+    <!-- Scripts JavaScript (identiques à ceux de l'index pour la cohérence) -->
+    <script>
+        // --- Script 1 : Masquer/afficher le header au défilement ---
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+        let isNavigating = false; // Flag pour ne pas cacher le menu lors d'un clic
+
+        window.addEventListener('scroll', () => {
+            // Si le scroll est déclenché par un clic sur un lien, on ne fait rien.
+            if (isNavigating) {
+                return;
+            }
+            if (lastScrollY < window.scrollY && window.scrollY > 150) {
+                header.classList.add('header-hidden');
+            } else if (lastScrollY > window.scrollY) {
+                header.classList.remove('header-hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // Quand on clique sur le bouton "remonter en haut", on active un flag temporaire
+        document.querySelector('.btn-top').addEventListener('click', () => {
+            isNavigating = true;
+            // On désactive le flag après 1 seconde, le temps que le scroll se termine.
+            setTimeout(() => {
+                isNavigating = false;
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
