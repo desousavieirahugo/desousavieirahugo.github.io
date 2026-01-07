@@ -14,8 +14,8 @@
 <body>
 
     <!-- L'en-tête est le même que sur la page d'accueil -->
-    <header> 
-        <div class="logo">HUGO VIEIRA.</div>
+    <header>
+        <a href="index.html#home" class="logo">HUGO VIEIRA.</a>
         <nav>
             <ul>
                 <!-- Ces liens retournent vers les sections spécifiques de la page d'accueil -->
@@ -33,19 +33,25 @@
             <h1>Maison Individuelle</h1>
             <p class="project-subtitle">Projet Personnel</p>
 
-            <!-- Galerie d'images pour ce projet -->
-            <div class="project-gallery">
-                <!-- Remplacez ces images par les vôtres -->
-                <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Vue principale du projet">
-                <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Vue intérieure">
-            </div>
-
             <!-- Texte descriptif du projet -->
             <div class="project-text">
                 <h2>Description du Projet</h2>
                 <p>Il s'agit d'une exploration personnelle sur le thème de l'habitat individuel. Le concept est de créer une maison compacte, fonctionnelle et largement ouverte sur son environnement naturel.</p>
                 <br>
                 <p>Le travail s'est concentré sur l'optimisation des espaces de vie et l'utilisation de matériaux durables et locaux. De grandes baies vitrées sont utilisées pour brouiller la frontière entre intérieur et extérieur.</p>
+            </div>
+
+            <!-- Galerie d'images pour ce projet -->
+            <div class="project-gallery">
+                <!-- Remplacez ces images par les vôtres -->
+                <div class="project-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Vue principale du projet">
+                    <div class="image-overlay-caption">© Unsplash - Vue principale du projet</div>
+                </div>
+                <div class="project-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Vue intérieure">
+                    <div class="image-overlay-caption">© Unsplash - Vue intérieure</div>
+                </div>
             </div>
 
             <!-- Bouton pour revenir à la section portfolio de la page d'accueil -->
@@ -56,10 +62,19 @@
 
     <!-- Le pied de page est le même que sur la page d'accueil -->
     <footer> 
-        <p>&copy; 2024 - Étudiant Architecture ENSA Lyon</p>
+        <p>&copy; 2026 - Étudiant Architecture ENSA Lyon</p>
         <!-- Le href="#" avec le script ci-dessous permet de remonter en haut de la page actuelle -->
         <a href="#" class="btn-top">↑ Remonter en haut</a>
     </footer>
+
+    <!-- Structure de la Lightbox (galerie d'images en grand) -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+        <a class="lightbox-prev">&#10094;</a>
+        <a class="lightbox-next">&#10095;</a>
+    </div>
 
     <!-- Scripts JavaScript (identiques à ceux de l'index pour la cohérence) -->
     <script>
@@ -83,12 +98,120 @@
 
         // Quand on clique sur le bouton "remonter en haut", on active un flag temporaire
         document.querySelector('.btn-top').addEventListener('click', () => {
+            // On s'assure que le header est visible pendant la navigation
+            header.classList.remove('header-hidden');
             isNavigating = true;
             // On désactive le flag après 1 seconde, le temps que le scroll se termine.
             setTimeout(() => {
                 isNavigating = false;
             }, 1000);
         });
+
+        // --- Script pour la Lightbox ---
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox) {
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const galleryItems = document.querySelectorAll('.project-gallery-item');
+            const closeBtn = document.querySelector('.lightbox-close');
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            const controls = [closeBtn, prevBtn, nextBtn];
+
+            let currentImageIndex;
+            let inactivityTimer;
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            // On récupère à la fois l'URL de l'image et sa légende
+            const imagesData = Array.from(galleryItems).map(item => ({
+                src: item.querySelector('img').src,
+                caption: item.querySelector('.image-overlay-caption').textContent
+            }));
+
+            const hideControls = () => {
+                controls.forEach(control => control.classList.add('hidden'));
+            };
+
+            const showControls = () => {
+                controls.forEach(control => control.classList.remove('hidden'));
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(hideControls, 3000); // Cache les contrôles après 3s d'inactivité
+            };
+
+            const openLightbox = (index) => {
+                currentImageIndex = index;
+                lightboxImg.src = imagesData[currentImageIndex].src;
+                lightboxCaption.textContent = imagesData[currentImageIndex].caption;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Empêche le défilement de l'arrière-plan
+                showControls(); // Affiche les contrôles et lance le timer
+            };
+
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                clearTimeout(inactivityTimer);
+            };
+
+            const showNextImage = () => {
+                currentImageIndex = (currentImageIndex + 1) % imagesData.length;
+                lightboxImg.src = imagesData[currentImageIndex].src;
+                lightboxCaption.textContent = imagesData[currentImageIndex].caption;
+                showControls(); // Réaffiche les contrôles à chaque changement d'image
+            };
+
+            const showPrevImage = () => {
+                currentImageIndex = (currentImageIndex - 1 + imagesData.length) % imagesData.length;
+                lightboxImg.src = imagesData[currentImageIndex].src;
+                lightboxCaption.textContent = imagesData[currentImageIndex].caption;
+                showControls(); // Réaffiche les contrôles à chaque changement d'image
+            };
+
+            const handleSwipe = () => {
+                const swipeThreshold = 50; // distance min en pixels pour considérer un swipe
+                if (touchendX < touchstartX - swipeThreshold) {
+                    showNextImage();
+                }
+                if (touchendX > touchstartX + swipeThreshold) {
+                    showPrevImage();
+                }
+            };
+
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => openLightbox(index));
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+            nextBtn.addEventListener('click', showNextImage);
+            prevBtn.addEventListener('click', showPrevImage);
+
+            // Ferme la lightbox en cliquant en dehors de l'image
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            // Gestion de l'inactivité (souris) et du swipe (tactile)
+            lightbox.addEventListener('mousemove', showControls);
+            lightbox.addEventListener('touchstart', (e) => {
+                touchstartX = e.changedTouches[0].screenX;
+                showControls();
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            // Navigation au clavier
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                showControls(); // Montre les contrôles quand on utilise le clavier
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') showNextImage();
+                if (e.key === 'ArrowLeft') showPrevImage();
+            });
+        }
     </script>
 
 </body>

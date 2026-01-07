@@ -15,7 +15,7 @@
 <body>
 
     <header> <!-- En-tête du site, visible sur toutes les pages -->
-        <div class="logo">HUGO VIEIRA.</div>
+        <a href="#home" class="logo">HUGO VIEIRA.</a>
         <nav>
             <ul>
                 <li><a href="#profil">Profil</a></li>
@@ -113,7 +113,7 @@
         
         <div class="contact-links">
             <div class="contact-item">
-                <a href="hugo.de-sousa-vieira@lyon.archi.fr"><strong>hugo.de-sousa-vieira@lyon.archi.fr</strong></a>
+                <a href="mailto:hugo.de-sousa-vieira@lyon.archi.fr"><strong>hugo.de-sousa-vieira@lyon.archi.fr</strong></a>
                  <!--<span>Email</span> -->
     
             </div>
@@ -125,7 +125,7 @@
     </section>
 
     <footer> <!-- Pied de page du site -->
-        <p>&copy; 2024 - Étudiant Architecture ENSA Lyon</p>
+        <p>&copy; 2026 - Étudiant Architecture ENSA Lyon</p>
         <!-- Lien pour remonter en haut de la page -->
         <a href="#home" class="btn-top">↑ Remonter en haut</a>
     </footer>
@@ -158,8 +158,10 @@
         });
 
         // Quand on clique sur un lien qui déclenche un scroll, on active un flag temporaire
-        document.querySelectorAll('header nav a, .btn-top, .btn-hero').forEach(link => {
+        document.querySelectorAll('header nav a, .btn-top, .btn-hero, .logo').forEach(link => {
             link.addEventListener('click', () => {
+                // On s'assure que le header est visible pendant la navigation
+                header.classList.remove('header-hidden');
                 isNavigating = true;
                 // On désactive le flag après 1 seconde, le temps que le scroll se termine.
                 setTimeout(() => {

@@ -10,7 +10,7 @@
 <body>
 
     <header>
-        <div class="logo">HUGO VIEIRA.</div>
+        <a href="index.html#home" class="logo">HUGO VIEIRA.</a>
         <nav>
             <ul>
                 <li><a href="index.html#profil">Profil</a></li>
@@ -26,16 +26,22 @@
             <h1>Carnet de Croquis</h1>
             <p class="project-subtitle">Recherches et esquisses</p>
 
-            <div class="project-gallery">
-                <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Croquis 1">
-                <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Croquis 2">
-            </div>
-
             <div class="project-text">
                 <h2>Description du Projet</h2>
                 <p>Cette section présente une collection de croquis et de recherches graphiques issus de divers projets et d'observations personnelles. Le dessin à la main est un outil fondamental dans ma pratique pour analyser, comprendre et développer une idée.</p>
                 <br>
                 <p>Les carnets sont un laboratoire d'expérimentations, où se mêlent détails techniques, études de lumière, et recherches de formes.</p>
+            </div>
+
+            <div class="project-gallery">
+                <div class="project-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Croquis 1">
+                    <div class="image-overlay-caption">© Unsplash - Croquis 1</div>
+                </div>
+                <div class="project-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Croquis 2">
+                    <div class="image-overlay-caption">© Unsplash - Croquis 2</div>
+                </div>
             </div>
 
             <a href="index.html#portfolio" class="btn-back">← Retour aux projets</a>
@@ -44,14 +50,29 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 - Étudiant Architecture ENSA Lyon</p>
+        <p>&copy; 2026 - Étudiant Architecture ENSA Lyon</p>
         <a href="#" class="btn-top">↑ Remonter en haut</a>
     </footer>
+
+    <!-- Structure de la Lightbox (galerie d'images en grand) -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+        <a class="lightbox-prev">&#10094;</a>
+        <a class="lightbox-next">&#10095;</a>
+    </div>
 
     <script>
         let lastScrollY = window.scrollY;
         const header = document.querySelector('header');
+        let isNavigating = false; // Flag pour ne pas cacher le menu lors d'un clic
+
         window.addEventListener('scroll', () => {
+            // Si le scroll est déclenché par un clic sur un lien, on ne fait rien.
+            if (isNavigating) {
+                return;
+            }
             if (lastScrollY < window.scrollY && window.scrollY > 150) {
                 header.classList.add('header-hidden');
             } else if (lastScrollY > window.scrollY) {
@@ -59,6 +80,123 @@
             }
             lastScrollY = window.scrollY;
         });
+
+        // Quand on clique sur le bouton "remonter en haut", on active un flag temporaire
+        document.querySelector('.btn-top').addEventListener('click', () => {
+            // On s'assure que le header est visible pendant la navigation
+            header.classList.remove('header-hidden');
+            isNavigating = true;
+            // On désactive le flag après 1 seconde, le temps que le scroll se termine.
+            setTimeout(() => {
+                isNavigating = false;
+            }, 1000);
+        });
+
+        // --- Script pour la Lightbox ---
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox) {
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const galleryItems = document.querySelectorAll('.project-gallery-item');
+            const closeBtn = document.querySelector('.lightbox-close');
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            const controls = [closeBtn, prevBtn, nextBtn];
+
+            let currentImageIndex;
+            let inactivityTimer;
+            let touchstartX = 0;
+            let touchendX = 0;
+
+            // On récupère à la fois l'URL de l'image et sa légende
+            const imagesData = Array.from(galleryItems).map(item => ({
+                src: item.querySelector('img').src,
+                caption: item.querySelector('.image-overlay-caption').textContent
+            }));
+
+            const hideControls = () => {
+                controls.forEach(control => control.classList.add('hidden'));
+            };
+
+            const showControls = () => {
+                controls.forEach(control => control.classList.remove('hidden'));
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(hideControls, 3000); // Cache les contrôles après 3s d'inactivité
+            };
+
+            const openLightbox = (index) => {
+                currentImageIndex = index;
+                lightboxImg.src = imagesData[currentImageIndex].src;
+                lightboxCaption.textContent = imagesData[currentImageIndex].caption;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Empêche le défilement de l'arrière-plan
+                showControls(); // Affiche les contrôles et lance le timer
+            };
+
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                clearTimeout(inactivityTimer);
+            };
+
+            const showNextImage = () => {
+                currentImageIndex = (currentImageIndex + 1) % imagesData.length;
+                lightboxImg.src = imagesData[currentImageIndex].src;
+                lightboxCaption.textContent = imagesData[currentImageIndex].caption;
+                showControls(); // Réaffiche les contrôles à chaque changement d'image
+            };
+
+            const showPrevImage = () => {
+                currentImageIndex = (currentImageIndex - 1 + imagesData.length) % imagesData.length;
+                lightboxImg.src = imagesData[currentImageIndex].src;
+                lightboxCaption.textContent = imagesData[currentImageIndex].caption;
+                showControls(); // Réaffiche les contrôles à chaque changement d'image
+            };
+
+            const handleSwipe = () => {
+                const swipeThreshold = 50; // distance min en pixels pour considérer un swipe
+                if (touchendX < touchstartX - swipeThreshold) {
+                    showNextImage();
+                }
+                if (touchendX > touchstartX + swipeThreshold) {
+                    showPrevImage();
+                }
+            };
+
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => openLightbox(index));
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+            nextBtn.addEventListener('click', showNextImage);
+            prevBtn.addEventListener('click', showPrevImage);
+
+            // Ferme la lightbox en cliquant en dehors de l'image
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            // Gestion de l'inactivité (souris) et du swipe (tactile)
+            lightbox.addEventListener('mousemove', showControls);
+            lightbox.addEventListener('touchstart', (e) => {
+                touchstartX = e.changedTouches[0].screenX;
+                showControls();
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            // Navigation au clavier
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                showControls(); // Montre les contrôles quand on utilise le clavier
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') showNextImage();
+                if (e.key === 'ArrowLeft') showPrevImage();
+            });
+        }
     </script>
 
 </body>

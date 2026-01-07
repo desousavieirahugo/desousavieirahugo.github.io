@@ -169,8 +169,8 @@ section {
 .project-page-section {
     padding-top: 120px; /* Espace pour le header fixe */
     padding-bottom: 80px;
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 1200px; /* On définit une largeur maximale pour une meilleure lisibilité */
+    margin: 0 auto; /* On centre le bloc dans la page */
 }
 .project-page-section h1 {
     font-size: 3rem;
@@ -185,6 +185,31 @@ section {
     margin-bottom: 40px;
     line-height: 1.8;
 }
+
+.image-overlay-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px 12px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: white;
+    font-size: 0.8rem;
+    opacity: 0; /* Caché par défaut sur ordinateur */
+    transition: opacity 0.3s ease;
+}
+
+.project-gallery-item {
+    position: relative;
+    cursor: zoom-in; /* Le curseur se transforme en loupe au survol */
+    overflow: hidden; /* Assure que l'icône ne dépasse pas si l'image a des bordures arrondies */
+}
+
+/* Sur ordinateur, le texte apparaît au survol */
+.project-gallery-item:hover .image-overlay-caption {
+    opacity: 1;
+}
+
 .project-page-section .project-gallery {
     display: grid;
     gap: 20px;
@@ -193,12 +218,89 @@ section {
 .project-page-section .project-gallery img {
     width: 100%;
     height: auto;
+    display: block; /* Empêche un petit espace sous l'image */
 }
 .btn-back {
     display: inline-block; padding: 12px 25px;
     border: 2px solid var(--primary); color: var(--primary); font-weight: bold;
 }
 .btn-back:hover { background: var(--primary); color: white; }
+
+/* --- STYLES POUR LA LIGHTBOX (GALERIE EN GRAND) --- */
+.lightbox {
+    display: none; /* Cachée par défaut */
+    position: fixed;
+    z-index: 2000; /* Doit être au-dessus de tout */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Utilisation de flex pour centrer l'image facilement */
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox.active {
+    display: flex; /* Affiche la lightbox */
+}
+
+.lightbox-content {
+    display: block;
+    max-width: 85%;
+    max-height: 85%;
+}
+
+.lightbox-caption {
+    color: #ccc;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.lightbox-prev,
+.lightbox-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    transition: 0.3s ease;
+    user-select: none; /* Empêche la sélection du texte des flèches */
+}
+
+.lightbox-prev { left: 2%; }
+.lightbox-next { right: 2%; }
+
+.lightbox-prev:hover,
+.lightbox-next:hover,
+.lightbox-close:hover {
+    color: #bbb;
+}
+
+/* Classe pour cacher les contrôles de la lightbox */
+.lightbox-prev.hidden,
+.lightbox-next.hidden,
+.lightbox-close.hidden {
+    opacity: 0;
+}
 
 /* --- CONTACT --- */
 #contact { background: #f4f4f4; text-align: center; }
@@ -243,5 +345,9 @@ footer {
     /* On désactive l'effet de zoom au survol sur les appareils tactiles */
     .item:hover img {
         transform: none;
+    }
+
+    .image-overlay-caption {
+        opacity: 1; /* Toujours visible sur mobile */
     }
 }
